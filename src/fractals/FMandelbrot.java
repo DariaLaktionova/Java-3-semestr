@@ -6,8 +6,8 @@ public class FMandelbrot implements Fractal {
         double p = x;
         double q = y;
 
-        int N = 100; //TODO move to constructor
-        double R = 100;  //TODO move to constructor
+        int N = 100;
+        double R = 100;
 
         int k = 0;
         for (int i = 0; i < 100; i++) {
