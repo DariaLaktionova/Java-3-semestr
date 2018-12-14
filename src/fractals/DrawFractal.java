@@ -31,8 +31,6 @@ public class DrawFractal extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Фракталы");
-
         Parent root = initInterface();
         primaryStage.setScene(new Scene(root, windowWidth, windowHeight));
 
@@ -99,7 +97,6 @@ public class DrawFractal extends Application {
         WritableImage wiImageWithFractal = new WritableImage(width, height);
         PixelWriter pixelWriterForImageWithFractal = wiImageWithFractal.getPixelWriter();
 
-        //перебрать все пиксели
         for (int ix = 0; ix < width - 1; ix++) {
             for (int iy = 0; iy < height - 1; iy++) {
                 double x = x0 + ix * dx;
