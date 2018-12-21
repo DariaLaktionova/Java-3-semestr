@@ -68,7 +68,7 @@ public class Zachot extends Application {
             }
 
         } catch (Exception e) {
-
+            //
         }
     }
 
