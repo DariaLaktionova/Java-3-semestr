@@ -11,9 +11,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Zachot extends Application {
+    private int width = 100;
+    private int heigh = 100;
 
     private Label title = new Label("здесь будут вопросы");
     private ImageView picture = new ImageView();
@@ -36,13 +39,14 @@ public class Zachot extends Application {
     }
 
     private Parent initInterface() {
-        title.setText("Просто тыкни");
+        title.setText("Где левый верхний собачный угол");
         zagrImage();
+        zagrQuest();
         return new VBox(title, picture);
     }
 
     private void initInteraction(Stage primaryStage) {
-        zagrQuest();
+
         primaryStage.addEventHandler(MouseEvent.MOUSE_CLICKED, event ->
                 clicked(event.getX(), event.getY())
         );
@@ -58,9 +62,10 @@ public class Zachot extends Application {
 
     private void zagrQuest() {
         try (
-                InputStream text = Zachot.class.getResourceAsStream("qcoord.txt")
+                InputStream text = Zachot.class.getResourceAsStream("a.txt")
         ) {
             Scanner scannerIn = new Scanner(text);
+
             for (int i = 0; i < 5; i++) {
                 questions[i] = new Question(
                         scannerIn.nextInt(), scannerIn.nextInt(), scannerIn.nextLine()
@@ -68,14 +73,15 @@ public class Zachot extends Application {
             }
 
         } catch (Exception e) {
-            //
+            System.out.println("failed to read the resource with questions");
+            e.printStackTrace();
         }
     }
 
     private void clicked(double x, double y) {
         Question question = questions[questionNumber];
-        System.out.println(question.getX());
-        if (question.getX() == x && question.getY() == y)
+        if ( question.getX() <= x && x <= question.getX() + width &&
+                question.getY() <= y && y <= question.getY() + heigh)
             result++;
         questionNumber++;
 
