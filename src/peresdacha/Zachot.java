@@ -4,16 +4,14 @@ import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import java.awt.*;
-import java.awt.event.MouseEvent;
 import java.io.InputStream;
 import java.util.Scanner;
-
 
 public class Zachot extends Application {
 
@@ -38,19 +36,9 @@ public class Zachot extends Application {
     }
 
     private Parent initInterface() {
-        /*VBox root = new VBox();
-
-        InputStream pickURL = L7_ResourcesExamples.class.getResourceAsStream("ослик.jpg");
-        Image img = new Image(pickURL);
-        picture.setImage(img);
-        root.getChildren().add(picture);
-
-        return root;*/
-        title.setText("Где сам осленок?");
+        title.setText("Просто тыкни");
         zagrImage();
-        title.setFont(Font.font(40));
         return new VBox(title, picture);
-
     }
 
     private void initInteraction(Stage primaryStage) {
@@ -62,24 +50,31 @@ public class Zachot extends Application {
 
 
     private void zagrImage() {
-        InputStream image = Zachot.class.getResourceAsStream("oselik.jpg")
+        InputStream image = Zachot.class.getResourceAsStream("medeya.jpg");
         Image img = new Image(image);
         picture.setImage(img);
     }
 
+
     private void zagrQuest() {
-        InputStream textIS = Zachot.class.getResourceAsStream("qcoord");
-        Scanner scannerIn = new Scanner(textIS);
-        for (int i = 0; i < 5; i++) {
-            questions[i] = new Question(
-                    scannerIn.nextInt(), scannerIn.nextInt(), scannerIn.nextInt(), scannerIn.nextInt(),
-                    scannerIn.nextLine()
-            );
+        try (
+                InputStream text = Zachot.class.getResourceAsStream("qcoord.txt")
+        ) {
+            Scanner scannerIn = new Scanner(text);
+            for (int i = 0; i < 5; i++) {
+                questions[i] = new Question(
+                        scannerIn.nextInt(), scannerIn.nextInt(), scannerIn.nextLine()
+                );
+            }
+
+        } catch (Exception e) {
+
         }
     }
 
-    private void clicked(int x, int y) {
+    private void clicked(double x, double y) {
         Question question = questions[questionNumber];
+        System.out.println(question.getX());
         if (question.getX() == x && question.getY() == y)
             result++;
         questionNumber++;
