@@ -108,7 +108,6 @@ public class DrawFractal extends Application {
 
         }
 
-
         return wiImageWithFractal;
     }
 
